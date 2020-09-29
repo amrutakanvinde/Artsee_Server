@@ -1,19 +1,15 @@
 
 module.exports = (sequelize, DataTypes) => {
-    const Cart = sequelize.define('cart', {
-        quantity: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        }
-        // userId: {
+    const Category_Item = sequelize.define('category_item', {
+        // itemId: {
         //     type: DataTypes.INTEGER,
         //     allowNull: false
         // },
-        // itemId: {
+        // categoryId: {
         //     type: DataTypes.INTEGER,
         //     allowNull: false
         // }
     })
 
-    return Cart;
+    return Category_Item;
 }
