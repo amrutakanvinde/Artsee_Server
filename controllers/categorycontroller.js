@@ -27,7 +27,24 @@ router.get('/',validateSession, (req, res) => {
 });
 
 //Edit Category
+router.put("/:id", validateSession, (req, res) => {
+  
+    Category.update(req.body.category,  
+        {where: {id: req.params.id}//, sellerId: req.user.id}
+    })
+    .then((items) => { res.status(200).json(items)})
+    .catch((err) => {res.status(500).json({error: err})})
+})
 
+//Delete Item
+router.delete("/:id", validateSession, (req, res) => {
+
+    Category.destroy({
+        where: {id: req.params.id}//, sellerId: req.user.id}
+    })
+    .then(() => {res.status(200).json({message: "category entry removed"})})
+    .catch((err) => {res.status(500).json({error: err})})
+})
 
 
 

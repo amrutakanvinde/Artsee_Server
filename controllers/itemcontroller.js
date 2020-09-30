@@ -16,7 +16,7 @@ router.post('/', validateSession, (req, res) => {
     }
     Item.create(itemEntry)
      .then(item => res.status(200).json({
-        message: 'item created'
+        message: 'item created' 
     }))
      .catch(err => res.status(500).json({error: err}))
 });
@@ -39,7 +39,10 @@ router.put("/:id", validateSession, (req, res) => {
     Item.update(req.body.item,  
         {where: {id: req.params.id, sellerId: req.user.id}
     })
-    .then((items) => { res.status(200).json(items)})
+    .then((items) => { res.status(200).json({
+        message: "Item updated",
+        items: items
+    })})
     .catch((err) => {res.status(500).json({error: err})})
 })
 
@@ -52,5 +55,21 @@ router.delete("/:id", validateSession, (req, res) => {
     .then(() => {res.status(200).json({message: "item entry removed"})})
     .catch((err) => {res.status(500).json({error: err})})
 })
+
+//Get Item By Id
+router.get('/:id',validateSession, (req, res) => {
+    let itemId = req.params.id;
+
+    Item.findAll({
+        where: { id: itemId, sellerId:req.user.id}, include: "seller"
+    })
+    .then(item => res.status(200).json({
+        message: "Item found",
+        data: item
+    }))
+    .catch(err => res.status(500).json("error:" + err))
+});
+
+//Get Item by Category Name (Stretch Goal)
 
 module.exports = router;    

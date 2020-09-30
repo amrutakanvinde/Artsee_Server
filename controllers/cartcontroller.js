@@ -24,12 +24,37 @@ router.post('/', validateSession, (req, res) => {
 router.get('/',validateSession, (req, res) => {
     let userid = req.user.id
     Cart.findAll({
-        where: {userId: userid}
+        where: {userId: userid}, include: ["user", "item"]
     })
     .then(cart => res.status(200).json({
        cart
     }))
     .catch(err => res.status(500).json({error: err}))
 });
+
+//Edit Cart
+router.put("/:id", validateSession, (req, res) => {
+  
+    Cart.update(req.body.cart,  
+        {where: {id: req.params.id, userId: req.user.id}
+    })
+    .then((cart) => { res.status(200).json({
+        message: "Item updated",
+        cart: cart
+    })})
+    .catch((err) => {res.status(500).json({error: err})})
+})
+
+//Delete Item
+router.delete("/:id", validateSession, (req, res) => {
+
+    Cart.destroy({
+        where: {id: req.params.id, userId: req.user.id}
+    })
+    .then(() => {res.status(200).json({message: "cart entry removed"})})
+    .catch((err) => {res.status(500).json({error: err})})
+})
+
+
 
 module.exports = router;  
