@@ -36,7 +36,7 @@ router.get('/',validateSession, (req, res) => {
 router.put("/:id", validateSession, (req, res) => {
   
     Cart.update(req.body.cart,  
-        {where: {id: req.params.id, userId: req.user.id}
+        {where: {id: req.params.id, userId: req.user.id}, include: ["user", "item"]
     })
     .then((cart) => { res.status(200).json({
         message: "Item updated",

@@ -1,14 +1,14 @@
 {
-  "name": "node-modules-server",
+  "name": "artsee-server",
   "version": "1.0.0",
-  "description": "Journal",
+  "description": "artsee",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
     "dev": "nodemon"
   },
-  "author": "YOUR NAME HERE",
+  "author": "Amruta Kanvinde",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^1.19.4"

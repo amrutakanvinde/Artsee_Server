@@ -22,10 +22,10 @@ router.post('/', validateSession, (req, res) => {
 });
 
 //Get Items
-router.get('/all/',validateSession, (req, res) => {
+router.get('/all',validateSession, (req, res) => {
     let userid = req.user.id
     Item.findAll({
-        where: {sellerId: userid}
+        where: {sellerId: userid}, include: "seller"
     })
     .then(item => res.status(200).json({
        item
