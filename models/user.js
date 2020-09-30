@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        type: {
+        role: {
             type: DataTypes.STRING,
             allowNull: false
         } 

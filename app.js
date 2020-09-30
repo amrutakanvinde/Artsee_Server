@@ -11,6 +11,7 @@ let category = require('./controllers/categorycontroller');
 
 
 sequelize.sync();
+// sequelize.sync({force: true}) //Drop database
 
 app.use(require('./middleware/headers'));
 app.use(express.json());

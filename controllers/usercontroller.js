@@ -3,11 +3,7 @@ const router = require("express").Router();
 const User = require("../db").import("../models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-
-router.get('/practice', (req, res) => {
-    res.send('This is a practice route');
-})
-
+let validateSession = require('../middleware/validate-session');
 
 router.post("/signup", function (req, res) {
 
@@ -36,7 +32,7 @@ router.post("/signup", function (req, res) {
             userName: req.body.user.userName,
             email: req.body.user.email,
             password: bcrypt.hashSync(req.body.user.password, 13),
-            type: req.body.user.type,
+            role: req.body.user.role,
           })
             .then(function createSuccess(user) {
               let token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
@@ -87,5 +83,54 @@ router.post("/login", function (req, res) {
       })
       .catch((err) => res.status(500).json({ error: err }));
   });
+
+  //Get all Users
+router.get('/all',validateSession, (req, res) => {
+
+  if((req.user.role).toLowerCase() === "admin"){
+      User.findAll()
+      .then(users => res.status(200).json({
+        users
+     }))
+     .catch(err => res.status(500).json({error: err}))
+  } else{
+      res.status(402).json({ error: "Only admin can acces all users" });
+  }
+});
+
+
+//Edit Item 
+router.put("/:id", validateSession, (req, res) => {
+// console.log(`Param Id ${req.params.id} and user id ${req.user.id} and role ${req.user.role}`)
+  if(parseInt(req.params.id) === req.user.id || (req.user.role).toLowerCase() === "admin"){
+    User.update(req.body.user, 
+      {where : {
+        id: req.params.id
+      }})
+      .then(user => {
+         res.status(200).json({
+          message: "User updated",
+          user: user
+        })
+      })
+      .catch((err) => {res.status(500).json({error: err})})
+  } else {
+    res.status(402).json({ error: "Not Authorized" });
+  }
+})
+
+//Delete User
+router.delete("/:id", validateSession, (req, res) => {
+
+  if(parseInt(req.params.id) === req.user.id || (req.user.role).toLowerCase() === "admin"){
+    User.destroy({
+        where: {id: req.params.id}
+    })
+    .then(() => {res.status(200).json({message: "user removed"})})
+    .catch((err) => {res.status(500).json({error: err})})
+  } else {
+    res.status(402).json({ error: "Not Authorized" });
+  }
+})
 
 module.exports = router;
