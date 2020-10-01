@@ -18,7 +18,7 @@ User = sequelize.import('./models/user');
 Cart = sequelize.import('./models/cart');
 Item = sequelize.import('./models/item');
 Category = sequelize.import('./models/category');
-Category_Items = sequelize.import('./models/category_items');
+Category_Items = sequelize.import('./models/category_item');
 
 
 // User.hasOne(Cart);

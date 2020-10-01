@@ -109,13 +109,12 @@ router.put("/:id", validateSession, (req, res) => {
       }})
       .then(user => {
          res.status(200).json({
-          message: "User updated",
-          user: user
+          message: `${user} User updated`
         })
       })
       .catch((err) => {res.status(500).json({error: err})})
   } else {
-    res.status(402).json({ error: "Not Authorized" });
+    res.status(401).json({ error: "Not Authorized" });
   }
 })
 
@@ -129,7 +128,7 @@ router.delete("/:id", validateSession, (req, res) => {
     .then(() => {res.status(200).json({message: "user removed"})})
     .catch((err) => {res.status(500).json({error: err})})
   } else {
-    res.status(402).json({ error: "Not Authorized" });
+    res.status(401).json({ error: "Not Authorized" });
   }
 })
 
