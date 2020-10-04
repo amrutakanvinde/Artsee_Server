@@ -48,10 +48,10 @@ router.post("/", validateSession, (req, res) => {
 
 //Get Items
 router.get("/all", validateSession, (req, res) => {
-  let userid = req.user.id;
+  // let userid = req.user.id;
   Item.findAll({
-    where: { sellerId: userid },
-    include: "seller",
+    // where: { sellerId: userid },
+    // include: "seller",
   })
     .then((item) =>
       res.status(200).json({
@@ -93,6 +93,7 @@ router.delete("/:id", validateSession, (req, res) => {
       res.status(500).json({ error: err });
     });
 });
+//Write code for deleting items from category_items
 
 //Get Item By Id
 router.get("/:id", validateSession, (req, res) => {
