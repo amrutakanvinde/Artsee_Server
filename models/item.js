@@ -5,12 +5,20 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
+        itemDescription:{
+            type: DataTypes.TEXT,
+            allowNull: false
+        },
         quantity: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
         price: {
             type: DataTypes.DOUBLE,
+            allowNull: false
+        },
+        itemImage: {
+            type: DataTypes.TEXT,
             allowNull: false
         },
         // shippingPrice: {

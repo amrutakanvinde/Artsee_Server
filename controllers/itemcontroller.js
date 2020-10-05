@@ -27,8 +27,11 @@ router.post("/", validateSession, (req, res) => {
     quantity: req.body.item.quantity,
     price: req.body.item.price,
     sellerId: req.user.id,
+    itemImage: req.body.item.itemImage,
+    itemDescription: req.body.item.itemDescription
     // userId: req.user.id
   };
+  console.log("************", itemEntry);
   Item.create(itemEntry)
     .then((item) => {
       let category_ids = req.body.item.category_ids;
@@ -83,11 +86,17 @@ router.put("/:id", validateSession, (req, res) => {
 //only seller/admin can delete items
 router.delete("/:id", validateSession, (req, res) => {
   checkUserRole(req.user.id, res);
-  Item.destroy({
-    where: { id: req.params.id, sellerId: req.user.id },
+
+  CategoryItem.destroy({
+    where: { itemId: req.params.id },
   })
     .then(() => {
-      res.status(200).json({ message: "item entry removed" });
+      Item.destroy({
+        where: { id: req.params.id, sellerId: req.user.id },
+      })
+        .then(() => {
+          res.status(200).json({ message: "item entry removed" });
+        })
     })
     .catch((err) => {
       res.status(500).json({ error: err });
