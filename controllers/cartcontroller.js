@@ -24,7 +24,7 @@ router.post('/', validateSession, (req, res) => {
 router.get('/',validateSession, (req, res) => {
     let userid = req.user.id
     Cart.findAll({
-        where: {userId: userid}, include: ["user", "item"]
+        where: {userId: userid}, include: ["item"]
     })
     .then(cart => res.status(200).json({
        cart
