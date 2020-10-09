@@ -49,6 +49,20 @@ router.post("/", validateSession, (req, res) => {
     .catch((err) => res.status(500).json({ error: err }));
 });
 
+//Get Items by role
+router.get("/", validateSession, (req, res) => {
+  let userid = req.user.id;
+  Item.findAll({
+    where: { sellerId: userid }
+  })
+    .then((item) =>
+      res.status(200).json({
+        item,
+      })
+    )
+    .catch((err) => res.status(500).json({ error: err }));
+});
+
 //Get Items
 router.get("/all", validateSession, (req, res) => {
   // let userid = req.user.id;
@@ -63,6 +77,7 @@ router.get("/all", validateSession, (req, res) => {
     )
     .catch((err) => res.status(500).json({ error: err }));
 });
+
 
 //Edit Item
 //only seller/admin can edit items
