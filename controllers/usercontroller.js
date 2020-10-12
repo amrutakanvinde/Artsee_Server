@@ -102,6 +102,13 @@ router.get("/all", validateSession, (req, res) => {
   }
 });
 
+//Get current User
+router.get("/", validateSession, (req, res) => {
+  User.findOne({ where: { id: req.user.id } })
+    .then((users) => res.status(200).json({ users }))
+    .catch((err) => res.status(500).json({ error: err }));
+});
+
 //Edit USer
 router.put("/:id", validateSession, (req, res) => {
   // console.log(`Param Id ${req.params.id} and user id ${req.user.id} and role ${req.user.role}`)
