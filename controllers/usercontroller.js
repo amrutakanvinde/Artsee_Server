@@ -102,7 +102,7 @@ router.get("/all", validateSession, (req, res) => {
   }
 });
 
-//Edit Item
+//Edit USer
 router.put("/:id", validateSession, (req, res) => {
   // console.log(`Param Id ${req.params.id} and user id ${req.user.id} and role ${req.user.role}`)
   if (
