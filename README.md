@@ -18,3 +18,17 @@ Here are the required responsibilities:
 - Use React Class Components, Routing, Guards,
 - Strong Typing with TypeScript(TypeScript must be used in every client side file),
 - Create and style a README markdown file (README.md),
+
+
+You can find the Database Diagram for the server on [here]https://dbdiagram.io/d/5f6e30787da1ea736e2f61d3
+
+# This server is built with:
+* JavaScript
+* PostgreSQL
+* Node
+* Express
+* Sequelize
+* JWT
+* Bcrypt
+
+
